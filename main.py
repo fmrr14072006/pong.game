@@ -1,6 +1,7 @@
 # Import library
 import pygame
 import random as rd 
+from pygame import mixer
 
 # Initialize pygame
 pygame.init()
@@ -158,6 +159,8 @@ while running:
     if ball_x > screen_width:
 
         player_1_score += 1
+        lose_sound = mixer.Sound("invalid-selection.wav")
+        lose_sound.play()
 
         ball_x = screen_width/2
         ball_y = screen_width/2
@@ -166,6 +169,8 @@ while running:
     elif ball_x < 0:
 
         player_2_score += 1
+        lose_sound = mixer.Sound("invalid-selection.wav")
+        lose_sound.play()
         
         ball_x = screen_width/2
         ball_y = screen_width/2
@@ -193,9 +198,11 @@ while running:
     # Colitions
     if ball.colliderect(player_1) or ball.colliderect(player_2):
         ball_speed_x *= -1
+        ball_sound = mixer.Sound("pong.wav")
+        ball_sound.play()
 
  # Player win
-    if player_1_score == 3:
+    if player_1_score == 10:
 
         ball_y = 2000
         ball_speed_x = 0
@@ -205,7 +212,7 @@ while running:
         win_text = win_font.render(" Player 1 Win", True, (0, 0, 0))
         screen.blit(win_text, (win_x, win_y))
 
-    elif player_2_score == 3:
+    elif player_2_score == 10:
 
         ball_y = 2000
         ball_speed_x = 0
